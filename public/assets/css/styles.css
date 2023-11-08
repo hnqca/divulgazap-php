@@ -1,0 +1,10 @@
+body {
+    background-color: #f6f6f6;
+}
+
+.group-img-rounded {
+    border-radius: 100%;
+    width: 130px; height: 130px;
+    margin-top: 20px;
+    object-fit: cover;
+}

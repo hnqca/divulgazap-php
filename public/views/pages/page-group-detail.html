@@ -1,0 +1,51 @@
+{% extends 'layout-base.html' %}
+
+{% block title %} {{ group.name }} | {{APP_NAME}} {% endblock %}
+
+{% block meta_options %}
+<meta property="og:title"       content="{{ group.name }} | {{APP_NAME}}" />
+<meta property="og:description" content="{{ group.description }}">
+<meta property="og:image"       content="{{ group.image }}" />
+<meta property="og:type"        content="website" />
+{% endblock %}
+
+
+{% block content %}
+<div class="container col-md-9 col-sm-12 mt-5 mb-5">
+  <div class="row">
+    <div class="text-center mb-5">
+      <h1>{{ group.name }}</h1>
+    </div>
+    <div class="col-md-6 mb-5">
+      <div class="card">
+        <img src="{{ group.image }}" class="card-img-top object-fit-cover group-img" width="100%" height="300px" />
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ group.name }}</h5>
+          <p class="card-text">{{ group.description|raw }}</p>
+          <div class="text-center d-sm-inline d-none">
+            <a href="https://chat.whatsapp.com/{{ group.link }}" target="_blank" class="btn btn-success btn-group-join w-100">Entrar no Grupo</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <span class="badge bg-dark text-uppercase mb-2">{{ group.category.name }}</span>
+          <p class="card-text">
+             Este grupo <strong>{{ group.name }}</strong> foi enviado em 
+            <strong class="text-muted">{{ group.created_at | date("d/m/Y") }}</strong>.
+          </p>
+          <hr />
+          <div class="text-center d-inline d-md-none">
+            <a href="https://chat.whatsapp.com/{{ group.link }}" target="_blank" class="btn btn-success btn-group-join w-100">Entrar no Grupo</a>
+          </div>
+          <div class="mt-2">
+            <a href="{{APP_URL}}/group/create" class="small text-decoration-none">Envie o seu grupo</a> também e comece a receber novos integrantes!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
