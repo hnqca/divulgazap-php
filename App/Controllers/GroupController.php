@@ -5,6 +5,7 @@
     use App\Core\Controller;
     use App\Models\Category;
     use App\Models\Group;
+    use App\Services\NotSafeForWorkService;
     use App\Services\RecaptchaService;
     use App\View\View;
 
@@ -75,10 +76,21 @@
             RecaptchaService::validate($dataRequest->recaptchaResponse);
 
             $scrapingGroupData = $this->scrapingGroupData($dataRequest->link);
+            $image = $scrapingGroupData['image'];
+
+            $nsfw = (new NotSafeForWorkService)->checkImage($image);
+
+            if(!$nsfw->secureToSave) {
+                return View::renderJson([
+                    'status'  => 'error',
+                    'message' => "Não foi possível continuar. Imagem do grupo contém conteúdo inapropriado.",
+                    'nsfw'    => $nsfw
+                ]);
+            }
 
             $this->groupModel->data->id_category = $dataRequest->id_category ?? 1;
             $this->groupModel->data->name        = $dataRequest->name;
-            $this->groupModel->data->image       = urlencode($scrapingGroupData['image']);
+            $this->groupModel->data->image       = urlencode($image);
             $this->groupModel->data->link        = $dataRequest->link;
             $this->groupModel->data->description = $dataRequest->description ?? null;
 
@@ -90,7 +102,8 @@
 
             return View::renderJson([
                 'status' => 'success',
-                'id'     =>  $groupId
+                'id'     => $groupId,
+                'nsfw'   => $nsfw
             ]);
         }
 

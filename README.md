@@ -1,22 +1,21 @@
-# <img width="50" src="_readme/logo.png"> DivulgaZAP 
-
-> 🚧 Projeto não finalizado
-
 <div align="center">
-    <img src="_readme/cover.png" width="100%" />
-</div><br/>
-
-
-Simples aplicação web desenvolvida com o propósito de compartilhar e descobrir novos grupos do WhatsApp. 
-
-
-Os visitantes podem encontrar grupos com base em seus interesses, filtrando por categorias. 
-
-_____
+    <img src="_readme/cover2.jpg" width="100%" />
+</div>
 
 Este projeto foi inspirado no site: [gruposwhats.app](https://gruposwhats.app)
 _____
 
+### 📗 Navegação:
+
+- [Dependências](#dependencias)
+- [Google reCAPTCHA](#reCAPTCHA)
+- [Banco de dados](#database)
+- [Web Scraping](#webscraping)
+- [Moderação de conteúdo inapropriado usando IA.](#nsfw)
+- [Demonstração](#demo)
+_____
+
+<a id="dependencias"></a>
 
 ### 📖 Dependências utilizadas:
 
@@ -38,11 +37,9 @@ _____
 
 Este projeto é baseado em PHP no seu back-end, utilizando orientação a objetos e seguindo o padrão MVC (Model, View e Controller).
 
-Também faz uso do template engine [Twig](https://twig.symfony.com/doc).
-
-Todo acesso ao banco de dados foi implementado utilizando [PDO](https://www.php.net/manual/pt_BR/book.pdo.php) com prepared statements.
-
 _____
+
+<a id="reCAPTCHA"></a>
 
 ### reCAPTCHA:
 Foi utilizado o [Google reCAPTCHA](https://www.google.com/recaptcha/about/) no formulário de cadastro para mitigar ataques automizados a aplicação.
@@ -55,6 +52,8 @@ reCAPTCHA_secret_key = "YOUR_SECRET_KEY"
 ```
 
 _____
+
+<a id="database"></a>
 
 ### Banco de Dados (MySQL):
 
@@ -71,7 +70,11 @@ DB_NAME=divulgazap
 DB_USER=root
 DB_PASS=
 ```
+
+Todo acesso ao banco de dados foi implementado utilizando [PDO](https://www.php.net/manual/pt_BR/book.pdo.php) com prepared statements.
 _____
+
+<a id="webscraping"></a>
 
 ### Web Scraping:
 
@@ -102,16 +105,45 @@ e por último, retornando os dados em formato JSON para o JavaScript:
 ```
 _____
 
+<a id="nsfw"></a>
 
-### O que ainda falta:
+### NSFW (Inteligência Artificial):
 
-- [ ] Adicionar paginação na listagem dos grupos.
-- [ ] Integração com o Google ADS.
-- [ ] Configurar uma tarefa agendada (CRON JOB) para validar automaticamente os links dos grupos em intervalos definidos e remover os grupos inválidos.
-- [ ] Exibir quantas vezes um determinado grupo foi acessado por meio da aplicação.
-- [ ] Integração com Stripe para oferecer a opção de destacar grupos na tela inicial da aplicação por um período após a aprovação do pagamento.
+A identificação de conteúdo com nudez em imagens de grupos do WhatsApp é realizada por meio da inteligência artificial da [Imagga](https://docs.imagga.com/?php#personal_photos-categorizer).
 
-Tem alguma sugestão para acrescentar à lista? Compartilhe [aqui](https://github.com/HenriqueCacerez/divulgazap/labels/%F0%9F%92%A1%20ideias).
+No momento final do cadastro, a URL da imagem do grupo é enviada para a **Imagga** via [cURL](https://www.php.net/manual/pt_BR/ref.curl.php).
+
+A plataforma analisará a imagem e fornecerá uma classificação denominada '**safe**', acompanhada de um valor de '**confidence**', representando a porcentagem que indica o quão "segura" a imagem é.
+
+É possível ajustar o nível de rigorosidade, modificando o valor na classe [**NotSafeForWorkService.php**](https://github.com/HenriqueCacerez/divulgazap/blob/main/App/Services/NotSafeForWorkService.php)
+
+```php
+    const MINIMUM_SAFE_CONFIDENCE = 65;
+```
+
+<img src="_readme/exampleMessageNotSafeForWork.png">
+
+Quanto maior for o valor definido, maior será a rigorosidade para a aprovação do grupo.
+
+Você pode definir as suas credenciais da Imagga no arquivo [**.env**](https://github.com/HenriqueCacerez/divulgazap/blob/main/.env):
+
+```bash
+    ## Imagga
+    IMAGGA_API_KEY    = "YOUR_API_KEY"
+    IMAGGA_API_SECRET = "YOUR_API_SECRET"
+```
+
+_____
+
+<a id="demo"></a>
+
+### Demonstração:
+
+<div align="center">
+    <img src="_readme/demoDivulgaZAP.gif" width="100%" />
+</div>
+
+_____
 
 ### Você é muito bem-vindo(a) para contribuir com este projeto
 

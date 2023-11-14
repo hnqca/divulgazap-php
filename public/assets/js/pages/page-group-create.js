@@ -81,7 +81,7 @@ class GroupForm {
 
         this.enableButton(true);
 
-        const message = (status === 'success' ? "Grupo cadastrado com sucesso!" : "Erro ao cadastrar o grupo");
+        const message = (status === 'success' ? "Grupo cadastrado com sucesso!" : response.data.message);
         this.showAlert(message, status);
 
         if (status !== 'success') {
