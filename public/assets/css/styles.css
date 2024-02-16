@@ -8,3 +8,17 @@ body {
     margin-top: 20px;
     object-fit: cover;
 }
+
+.card-group {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.card-group img {
+    width: 100%;
+    transition: 0.3s all ease-in-out;
+}
+
+.card-group:hover img {
+    transform: scale(1.09);
+}

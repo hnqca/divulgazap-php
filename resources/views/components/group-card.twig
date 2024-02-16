@@ -1,0 +1,12 @@
+{% macro GroupCard(data) %}
+    <!-- Card -->
+        <div class="card position-relative card-group">
+          <img style="height: 170px; object-fit: cover;" src="/assets/images/groups/{{ data.image }}" class="card-img-top" />
+          <div class="card-body">
+            <a href="/?category={{data.category.name|url_encode}}" style="position: absolute; margin-top: -25px; left: 10px;" class="badge bg-dark text-uppercase text-decoration-none">{{ data.category.name }}</a>
+            <h5 class="card-title mb-3">{{ data.name|slice(0, 26) }}</h5>
+            <a href="/grupo/{{data.id}}" class="btn btn-success btn-group-join w-100">Entrar no Grupo</a>
+          </div>
+        </div>
+    <!--// Card -->
+{% endmacro %}

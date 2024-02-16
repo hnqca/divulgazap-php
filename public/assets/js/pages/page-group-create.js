@@ -57,7 +57,8 @@ class GroupForm {
     }
 
     validateLinkGroup = async ({ link }) => {
-        const response = await sendRequestToAPI('POST', 'api/validate-link', { link });
+
+        const response = await sendRequestToAPI('GET', `api/group/validate-link/${link}`);
         const { status = 'error', group = null } = response.data;
 
         this.enableButton(true);
@@ -98,14 +99,13 @@ class GroupForm {
     setupEventHandlers() {
         this.elements.form.create.on('submit', (e) => {
             e.preventDefault();
-            const recaptchaResponse = grecaptcha.getResponse();
 
             const formData = {
                 link:        this.sanitizeLinkGroup(this.elements.input.link.val()),
                 id_category: this.elements.input.id_category.find(":selected").val(),
                 name:        this.elements.input.name.val(),
                 description: this.elements.input.description.val() || "",
-                recaptchaResponse: recaptchaResponse
+                recaptchaResponse: grecaptcha.getResponse()
             }
 
             this.enableButton(false);

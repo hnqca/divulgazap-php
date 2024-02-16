@@ -1,0 +1,13 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %} 404 - Página não encontrada | {{APP_NAME}} {% endblock %}
+
+{% from 'components/header.twig' import Header %}
+
+{% block content %}
+<main>
+{{ 
+    Header("Página não encontrada :/", "Não encontramos a página que você está procurando.") 
+}}
+</main>
+{% endblock %}

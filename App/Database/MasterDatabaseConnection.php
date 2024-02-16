@@ -1,6 +1,6 @@
 <?php
 
-    namespace HenriqueCacerez\MasterPDO;
+    namespace App\Database;
 
     class MasterDatabaseConnection {
 

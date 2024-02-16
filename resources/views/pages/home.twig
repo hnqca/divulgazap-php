@@ -1,0 +1,28 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %} Inicio | {{APP_NAME}} {% endblock %}
+
+{% from 'components/header.twig'     import Header %}
+{% from 'components/group-card.twig' import GroupCard %}
+
+{% block content %}
+<main>
+    <!-- Header-->
+    {{
+        Header(APP_NAME, "Encontre ou compartilhe grupos de WhatsApp")
+     }}
+    <!-- // Header -->
+
+    <!-- Listing Groups -->
+    <section class="bg-light py-5">
+        <div class="container px-4 px-lg-5 mt-5">
+            <div class="row gx-4 gx-lg-5 row-cols-1 row-cols-md-2 row-cols-xl-3 row-cols-xl-4 justify-content-center">
+                {% for group in groups %}
+                    <div class="col mb-5">{{ GroupCard(group) }}</div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- // Listing Groups -->
+</main>
+{% endblock %}

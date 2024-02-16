@@ -1,7 +1,8 @@
 <?php
 
-    namespace HenriqueCacerez\MasterPDO;
-
+    namespace App\Database;
+    use App\Database\MasterDatabaseConnection;
+    use App\Helpers\Env;
     use PDO;
 
     class MasterPDO {
@@ -15,6 +16,7 @@
         protected $orderBy      = null;
         protected $limit        = null;
         protected $placeholders = [];
+        protected $sanitizeOutputData = true;
 
         protected $conn;
         protected $fetchStyle;
@@ -23,6 +25,14 @@
         {
             $this->setConnection($conn);
             $this->setFetchStyle($fetchStyle);
+            $this->setSanitizeOutputData(Env::get('DB_SANITIZE_OUTPUT_DATA'));
+        }
+
+        private function setSanitizeOutputData($condition)
+        {
+            $condition = (strtolower($condition) === "true") ? true : false;
+
+            $this->sanitizeOutputData = $condition;
         }
 
         private function setConnection($conn)
@@ -49,9 +59,7 @@
         // limpa o paramêtro para impedir XSS Attack.
         public static function doCleanParam($param) 
         {
-            return is_string($param) ? htmlspecialchars($param, ENT_QUOTES, 'UTF-8') : $param;
-            // return is_string($param) ? strip_tags(htmlspecialchars($param)) : $param;
-            
+            return is_string($param) ? strip_tags(htmlspecialchars($param)) : $param;
         }
 
         // Define a tabela que será manipulada.
@@ -172,6 +180,11 @@
         // Limpa os dados de saída, evitando XSS attack.
         private function sanitizeObjectData($data, $typeSelect)
         {
+            if (!$this->sanitizeOutputData) {
+                $this->setAttributes($data);
+                return $data;
+            }
+
             if ($typeSelect === "fetch") {
                 $result = (object) array_map('self::doCleanParam', get_object_vars($data));
                 $this->setAttributes( $result );
@@ -197,6 +210,11 @@
         // Limpa os dados de saída, evitando XSS attack.
         private function sanitizeArrayData($array)
         {
+            if (!$this->sanitizeOutputData) {
+                $this->setAttributes($array);
+                return $array;
+            }
+
             $result = [];
             foreach ($array as $key => $value) {
                 if (is_array($value)) {

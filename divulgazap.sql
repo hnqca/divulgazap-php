@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 08-Nov-2023 às 12:37
+-- Tempo de geração: 16-Fev-2024 às 16:43
 -- Versão do servidor: 10.4.25-MariaDB
 -- versão do PHP: 8.1.10
 
@@ -72,11 +72,11 @@ INSERT INTO `categories` (`id`, `name`, `icon`, `created_at`, `updated_at`) VALU
 CREATE TABLE `groups` (
   `id` int(11) NOT NULL,
   `id_category` int(11) NOT NULL,
-  `visible` tinyint(1) NOT NULL DEFAULT 1,
-  `name` varchar(150) NOT NULL,
-  `image` varchar(500) NOT NULL,
-  `link` varchar(500) NOT NULL,
-  `description` longtext DEFAULT NULL,
+  `name` varchar(160) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `link` varchar(255) NOT NULL,
+  `visible` tinyint(4) NOT NULL DEFAULT 1,
+  `description` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -85,9 +85,11 @@ CREATE TABLE `groups` (
 -- Extraindo dados da tabela `groups`
 --
 
-INSERT INTO `groups` (`id`, `id_category`, `visible`, `name`, `image`, `link`, `description`, `created_at`, `updated_at`) VALUES
-(1, 13, 1, '⭐Resenha das figurinhas⭐', 'https%3A%2F%2Fpps.whatsapp.net%2Fv%2Ft61.24694-24%2F390131610_168029076381601_7249968841341355535_n.jpg%3Fccb%3D11-4%26oh%3D01_AdQJBjn-e68mrInTdyARCUx5TgYp4kbgHQif_6wFwmlw_Q%26oe%3D65587D4B%26_nc_sid%3De6ed6c%26_nc_cat%3D103', 'HqMkuDYlxjOJYtljEow6lv', 'uma descrição do grupo aqui!', '2023-11-08 10:41:20', '2023-11-08 10:41:20'),
-(2, 17, 1, 'Programação WEB', 'https%3A%2F%2Fpps.whatsapp.net%2Fv%2Ft61.24694-24%2F227605994_437600371473876_4302122585451980698_n.jpg%3Fccb%3D11-4%26oh%3D01_AdSiOrgv47wlCXDBPHWHhZ6iZ1KqEhRqdz3qzAUCquA6mA%26oe%3D65587304%26_nc_sid%3De6ed6c%26_nc_cat%3D111', 'KdvpeSuPoihCZWzYf8JMrG', '', '2023-11-08 11:23:47', '2023-11-08 11:23:47');
+INSERT INTO `groups` (`id`, `id_category`, `name`, `image`, `link`, `visible`, `description`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Figurinhas ', '65cf80af58c92.jpg', 'HgQf0TOFEUv63sdSKt2qAP', 1, '', '2024-02-16 15:35:11', '2024-02-16 15:35:11'),
+(2, 18, 'Games e Jogos #01', '65cf80ddaa444.jpg', 'IZe4HOtnJ54CGAEDiTGvjL', 1, 'uma descrição legal aqui...', '2024-02-16 15:35:59', '2024-02-16 15:35:59'),
+(3, 16, 'Cʜᴀᴛ ʙᴏᴛ Bᴇᴄᴄᴀ - Jeremias e Indião🌙', '65cf80fc322c7.jpg', 'DJnJZy5JSxfGIm0dLMYxTC', 1, '', '2024-02-16 15:36:28', '2024-02-16 15:36:28'),
+(4, 13, '⫷Figurinhas 24 Horas⫸', '65cf811c143c0.jpg', 'HIUGQM65oBqAuKTncjqffa', 1, '', '2024-02-16 15:37:00', '2024-02-16 15:37:00');
 
 --
 -- Índices para tabelas despejadas
@@ -104,7 +106,6 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
-ALTER TABLE `groups` ADD FULLTEXT KEY `search` (`name`,`description`);
 
 --
 -- AUTO_INCREMENT de tabelas despejadas
@@ -120,7 +121,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT de tabela `groups`
 --
 ALTER TABLE `groups`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,14 +1,15 @@
 <?php
-
-
     namespace App\View;
 
     use App\Helpers\Env;
+    use App\Helpers\Language;
 
     class View {
         
-        const DIR_PAGES   = __DIR__ . '/../../public/views/pages';
-        const DIR_LAYOUTS = __DIR__ . '/../../public/views/layouts';
+        const DIR_RESOURCES  = __DIR__ . '/../../resources/views';
+        const DIR_PAGES      = __DIR__ . '/../../resources/views/pages';
+        const DIR_LAYOUTS    = __DIR__ . '/../../resources/views/layouts';
+        const DIR_COMPONENTS = __DIR__ . '/../../resources/views/components';
 
         private $loader;
         private $twig;
@@ -19,39 +20,18 @@
             $this->twig->addGlobal('APP_URL',  Env::get('APP_URL'));
             $this->twig->addGlobal('APP_NAME', Env::get('APP_NAME'));
             $this->twig->addGlobal('APP_LOGO', Env::get('APP_LOGO'));
-            $this->twig->addGlobal('reCAPTCHA_public_key', Env::get('reCAPTCHA_public_key'));
+            $this->twig->addGlobal('language', new Language);
         }
 
-        public function renderPage(string $filePage, array $variables = [])
+        public function renderHTML($fileName, $variables = [])
         {
-            $this->loader = new \Twig\Loader\FilesystemLoader([self::DIR_PAGES, self::DIR_LAYOUTS]);
+            $this->loader = new \Twig\Loader\FilesystemLoader([self::DIR_RESOURCES]);
             $this->twig   = new \Twig\Environment($this->loader);
 
             $this->setGlobalVars();
 
-            $this->theme = $this->twig->load( $filePage );
+            $this->theme = $this->twig->load( "{$fileName}.twig" );
 
-            echo $this->theme->render( $variables );
+            echo $this->theme->render($variables);
         }
-
-
-        public static function renderJson($data, string $title = "data")
-        {
-            $data = json_decode(json_encode($data), true);
-        
-            header("Content-Type: application/json");
-            die ( json_encode([$title => $data], JSON_PRETTY_PRINT) );
-        }
-
-
-        public static function renderError($message, $context = "unknow")
-        {
-            die (self::renderJson([
-                "status"  => "error",
-                "context" => $context,
-                "message" => $message
-            ]));
-        }
-
-
     }

@@ -1,0 +1,30 @@
+{% extends 'layouts/base.twig' %}
+
+{% block title %} Categorias | {{APP_NAME}} {% endblock %}
+
+{% from 'components/header.twig'        import Header %}
+{% from 'components/category-item.twig' import CategoryItem %}
+
+{% block content %}
+<main>
+  <!-- Header-->
+  {{
+    Header("Categorias", "Lista de temas específicos em Grupos do WhatsApp")
+  }}
+  <!-- // Header -->
+
+  {{ testing }}
+
+  <!-- Listing Categories -->
+  <section class="container mt-5">
+    <div class="list-group mb-5">
+      <div class="row">
+        {% for category in categories %}
+          {{ CategoryItem(category) }}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <!-- // Listing Categories -->
+</main>
+{% endblock %}

@@ -1,8 +1,6 @@
-const DOMAIN = "http://localhost/divulgazap/public";
-
 const sendRequestToAPI = async (typeRequest, endpoint, data = null) => {
     try {
-        const response = await fetch(`${DOMAIN}/${endpoint}`, {
+        const response = await fetch(`/${endpoint}`, {
             method:     typeRequest,
             body:       data ? JSON.stringify({ data: data }) : null,
             headers: { 
@@ -35,7 +33,3 @@ const closeAlert = ( element ) => {
     element.removeClass();
     element.addClass('d-none');
 }
-
-$('.group-img').on('error', function () {
-    this.src = `${DOMAIN}/assets/images/placeholder.png`;
-});

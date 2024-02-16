@@ -1,20 +1,11 @@
 <?php
 
-    namespace App\Models;
-    use HenriqueCacerez\MasterPDO\MasterLayer;
+namespace App\Models;
 
-    class Category extends MasterLayer {
-
-        function __construct()
-        {
-            parent::__construct(tableName: "categories", primaryKey: "id", timestamps: true);
-        }
-
-        public function findByName(string $name)
-        {
-            $this->find("name = {$name}")->select();
-
-            return $this;
-        }
-
+class Category extends Model
+{
+    public function __construct()
+    {
+        parent::__construct(tableName: "categories", primaryKey: "id", timestamps: true);
     }
+}

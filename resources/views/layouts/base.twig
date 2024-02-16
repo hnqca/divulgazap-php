@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ language.get() }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Descrição da página">
+    <meta name="keywords"    content="palavra chave1, palavra chave2, palavra chave3">
+    <meta name="author"      content="{{APP_NAME}}">
+    
+    <title>{% block title %} {{ APP_NAME }} {% endblock %}</title>
+
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{APP_LOGO}}" />
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="/assets/css/libs/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <!-- Page CSS -->
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+<body>
+
+    <!-- Navigation -->
+    {{ 'navbar' not in ignoreLayouts ? include('layouts/navbar.twig') : '' }}
+
+    <!-- Content -->
+    <div id="content-app">
+        {% block content %}
+        {% endblock %}
+    </div>
+    <!-- / Content -->
+
+    <!-- Footer -->
+    {{ 'footer' not in ignoreLayouts ? include('layouts/footer.twig') : '' }}
+
+    <!-- Global JS -->
+    <script src="/assets/js/libs/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/libs/jquery.js"></script>
+    <script src="/assets/js/general.js"></script>
+
+    <!-- Page JS -->
+    {% block javascripts %}
+    {% endblock %}
+</body>
+</html>
